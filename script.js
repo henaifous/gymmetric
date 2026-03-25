@@ -181,24 +181,4 @@
         }, { passive: true });
     }
 
-    // ---------- Chart line drawing animation ----------
-    var chartPath = document.querySelector('.mock-chart-svg path:nth-child(2)');
-    if (chartPath) {
-        var length = chartPath.getTotalLength();
-        chartPath.style.strokeDasharray = length;
-        chartPath.style.strokeDashoffset = length;
-
-        var chartObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    chartPath.style.transition = 'stroke-dash-offset 1.5s ease-in-out';
-                    chartPath.style.strokeDashoffset = '0';
-                    chartObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        chartObserver.observe(chartPath);
-    }
-
 })();
