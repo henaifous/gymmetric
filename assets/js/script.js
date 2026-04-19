@@ -170,6 +170,27 @@
         }
     });
 
+    // ---------- Hero particles ----------
+    var heroSection = document.getElementById('hero');
+    if (heroSection) {
+        var particleContainer = document.createElement('div');
+        particleContainer.className = 'hero__particles';
+        heroSection.appendChild(particleContainer);
+
+        var particleCount = 16;
+        for (var i = 0; i < particleCount; i++) {
+            var p = document.createElement('span');
+            p.className = 'hero__particle';
+            p.style.setProperty('--x', (Math.random() * 90 + 5) + '%');
+            p.style.setProperty('--y', (Math.random() * 85 + 5) + '%');
+            p.style.setProperty('--size', (Math.random() * 4 + 2) + 'px');
+            p.style.setProperty('--duration', (Math.random() * 6 + 4) + 's');
+            p.style.setProperty('--delay', (Math.random() * 5) + 's');
+            p.style.setProperty('--opacity', (Math.random() * 0.32 + 0.10).toFixed(2));
+            particleContainer.appendChild(p);
+        }
+    }
+
     // ---------- Parallax for hero glow ----------
     var heroGlow = document.querySelector('.hero__bg-glow');
 
