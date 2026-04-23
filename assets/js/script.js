@@ -5,22 +5,88 @@
 (function () {
     'use strict';
 
+    // ---------- Theme mode ----------
+    var themeStorageKey = 'site-theme-mode';
+    var themeButtons = document.querySelectorAll('[data-theme-option]');
+    var systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function resolveTheme(mode) {
+        return mode === 'dark' || (mode === 'system' && systemThemeQuery.matches) ? 'dark' : 'light';
+    }
+
+    function applyTheme(mode) {
+        var resolvedTheme = resolveTheme(mode);
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        document.documentElement.setAttribute('data-theme', resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+        themeButtons.forEach(function (button) {
+            button.setAttribute('aria-pressed', String(button.getAttribute('data-theme-option') === mode));
+        });
+    }
+
+    function getInitialThemeMode() {
+        try {
+            return localStorage.getItem(themeStorageKey) || document.documentElement.getAttribute('data-theme-mode') || 'system';
+        } catch (error) {
+            return document.documentElement.getAttribute('data-theme-mode') || 'system';
+        }
+    }
+
+    applyTheme(getInitialThemeMode());
+
+    function syncSystemTheme() {
+        if ((document.documentElement.getAttribute('data-theme-mode') || 'system') === 'system') {
+            applyTheme('system');
+        }
+    }
+
+    if (systemThemeQuery.addEventListener) {
+        systemThemeQuery.addEventListener('change', syncSystemTheme);
+    } else if (systemThemeQuery.addListener) {
+        systemThemeQuery.addListener(syncSystemTheme);
+    }
+
     // ---------- Navbar scroll effect ----------
     const nav = document.getElementById('nav');
+    const progressBar = document.querySelector('.scroll-progress span');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let lastScroll = 0;
 
     function handleNavScroll() {
         const scrollY = window.scrollY;
-        nav.classList.toggle('nav--scrolled', scrollY > 40);
+        if (nav) {
+            nav.classList.toggle('nav--scrolled', scrollY > 40);
+        }
+
+        if (progressBar) {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = scrollable > 0 ? scrollY / scrollable : 0;
+            progressBar.style.transform = 'scaleX(' + progress + ')';
+        }
+
         lastScroll = scrollY;
     }
 
     window.addEventListener('scroll', handleNavScroll, { passive: true });
+    handleNavScroll();
 
     // ---------- Mobile menu ----------
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     let menuOpen = false;
+
+    function closeMobileMenu() {
+        menuOpen = false;
+        if (mobileMenu) {
+            mobileMenu.classList.remove('open');
+        }
+        if (hamburger) {
+            hamburger.classList.remove('active');
+        }
+        document.body.style.overflow = '';
+    }
 
     if (hamburger && mobileMenu) {
         hamburger.addEventListener('click', function () {
@@ -33,13 +99,26 @@
         // Close on link click
         mobileMenu.querySelectorAll('a').forEach(function (link) {
             link.addEventListener('click', function () {
-                menuOpen = false;
-                mobileMenu.classList.remove('open');
-                hamburger.classList.remove('active');
-                document.body.style.overflow = '';
+                closeMobileMenu();
             });
         });
     }
+
+    themeButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var mode = button.getAttribute('data-theme-option') || 'system';
+
+            try {
+                localStorage.setItem(themeStorageKey, mode);
+            } catch (error) {}
+
+            applyTheme(mode);
+
+            if (mobileMenu && mobileMenu.contains(button)) {
+                closeMobileMenu();
+            }
+        });
+    });
 
     // ---------- Smooth scroll for anchor links ----------
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
@@ -58,7 +137,11 @@
     // ---------- Reveal on scroll (Intersection Observer) ----------
     var revealElements = document.querySelectorAll('.reveal');
 
-    if ('IntersectionObserver' in window) {
+    if (reducedMotion) {
+        revealElements.forEach(function (el) {
+            el.classList.add('visible');
+        });
+    } else if ('IntersectionObserver' in window) {
         var revealObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
@@ -145,6 +228,7 @@
     }
 
     window.addEventListener('scroll', updateActiveLink, { passive: true });
+    updateActiveLink();
 
     // ---------- Stagger reveal for grid children ----------
     document.querySelectorAll('.features__grid, .showcase__cards, .privacy__grid, .pricing__grid').forEach(function (grid) {
@@ -172,7 +256,7 @@
 
     // ---------- Hero particles ----------
     var heroSection = document.getElementById('hero');
-    if (heroSection) {
+    if (heroSection && !reducedMotion) {
         var particleContainer = document.createElement('div');
         particleContainer.className = 'hero__particles';
         heroSection.appendChild(particleContainer);
@@ -194,7 +278,7 @@
     // ---------- Parallax for hero glow ----------
     var heroGlow = document.querySelector('.hero__bg-glow');
 
-    if (heroGlow) {
+    if (heroGlow && !reducedMotion) {
         window.addEventListener('mousemove', function (e) {
             var x = (e.clientX / window.innerWidth - 0.5) * 30;
             var y = (e.clientY / window.innerHeight - 0.5) * 30;

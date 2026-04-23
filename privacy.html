@@ -4,16 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy — Gymmetric</title>
-    <meta name="description" content="Gymmetric's privacy policy. Your workout data stays on your device. No accounts, no tracking, no ads.">
+    <meta name="description" content="Gymmetric's privacy policy. Your workout data stays on your device, with no accounts and no advertising-based tracking.">
+    <script>
+        (function () {
+            try {
+                var mode = localStorage.getItem('site-theme-mode') || 'system';
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var resolved = mode === 'dark' || (mode === 'system' && prefersDark) ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme-mode', mode);
+                document.documentElement.setAttribute('data-theme', resolved);
+                document.documentElement.style.colorScheme = resolved;
+            } catch (error) {}
+        })();
+    </script>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/privacy.css">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="apple-touch-icon" href="assets/images/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
 </head>
 <body class="privacy-page">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
     <!-- ======================== NAV ======================== -->
     <nav class="nav nav--scrolled" id="nav">
@@ -26,7 +40,13 @@
                 <li><a href="index.html#features">Features</a></li>
                 <li><a href="index.html#how-it-works">How It Works</a></li>
                 <li><a href="privacy.html" class="active">Privacy</a></li>
+                <li><a href="../index.html">Portfolio</a></li>
             </ul>
+            <div class="theme-switcher theme-switcher--nav" role="group" aria-label="Color theme">
+                <button class="theme-switcher__button" type="button" data-theme-option="system" aria-pressed="true">Auto</button>
+                <button class="theme-switcher__button" type="button" data-theme-option="light" aria-pressed="false">Light</button>
+                <button class="theme-switcher__button" type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+            </div>
             <a href="https://apps.apple.com/ma/app/gymmetric-gym-workout-tracker/id6747186413" target="_blank" rel="noopener" class="btn btn--sm btn--primary nav__cta">Download</a>
             <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -40,10 +60,19 @@
             <li><a href="index.html#features">Features</a></li>
             <li><a href="index.html#how-it-works">How It Works</a></li>
             <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="../index.html">Portfolio</a></li>
+            <li class="mobile-menu__theme">
+                <div class="theme-switcher theme-switcher--mobile" role="group" aria-label="Color theme">
+                    <button class="theme-switcher__button" type="button" data-theme-option="system" aria-pressed="true">Auto</button>
+                    <button class="theme-switcher__button" type="button" data-theme-option="light" aria-pressed="false">Light</button>
+                    <button class="theme-switcher__button" type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+                </div>
+            </li>
             <li><a href="https://apps.apple.com/ma/app/gymmetric-gym-workout-tracker/id6747186413" target="_blank" rel="noopener" class="btn btn--primary btn--block">Download</a></li>
         </ul>
     </div>
 
+    <main id="main-content">
     <!-- ======================== PAGE HERO ======================== -->
     <section class="priv-hero">
         <div class="priv-hero__glow priv-hero__glow--1"></div>
@@ -64,7 +93,7 @@
                 </div>
                 <span class="badge">Privacy First</span>
                 <h1 class="priv-hero__title">Privacy <span class="gradient-text">Policy</span></h1>
-                <p class="priv-hero__subtitle">Gymmetric is designed from the ground up with your privacy in mind. No accounts, no tracking, no compromises.</p>
+                <p class="priv-hero__subtitle">Gymmetric is designed from the ground up with your privacy in mind. No accounts, no unnecessary data collection, and no compromises on ownership.</p>
                 <div class="priv-hero__meta">
                     <span class="priv-meta-pill">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -270,6 +299,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- ======================== FOOTER ======================== -->
     <footer class="footer">
@@ -283,8 +313,9 @@
                     <a href="index.html#features">Features</a>
                     <a href="index.html#how-it-works">How It Works</a>
                     <a href="privacy.html">Privacy</a>
+                    <a href="../index.html">Portfolio</a>
                 </div>
-                <p class="footer__copy">&copy; 2026 Gymmetric. All rights reserved.</p>
+                <p class="footer__copy">&copy; 2026 Gymmetric. Built by Soufiane H.</p>
             </div>
         </div>
     </footer>

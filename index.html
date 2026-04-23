@@ -3,16 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gymmetric — Your Gym Companion</title>
-    <meta name="description" content="Build routines, track sets & reps, and visualize your progress with beautiful charts. Gymmetric is the iOS fitness companion designed for lifters who want results.">
+    <title>Gymmetric — iOS Workout Tracker</title>
+    <meta name="description" content="Build routines, track sets and reps, and visualize your progress with beautiful charts. Gymmetric is the iOS workout tracker by Soufiane H. for lifters who want results.">
+    <script>
+        (function () {
+            try {
+                var mode = localStorage.getItem('site-theme-mode') || 'system';
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var resolved = mode === 'dark' || (mode === 'system' && prefersDark) ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme-mode', mode);
+                document.documentElement.setAttribute('data-theme', resolved);
+                document.documentElement.style.colorScheme = resolved;
+            } catch (error) {}
+        })();
+    </script>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="apple-touch-icon" href="assets/images/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
     <!-- ======================== NAV ======================== -->
     <nav class="nav" id="nav">
@@ -25,7 +39,13 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="privacy.html">Privacy</a></li>
+                <li><a href="henaifuos.com">About me</a></li>
             </ul>
+            <div class="theme-switcher theme-switcher--nav" role="group" aria-label="Color theme">
+                <button class="theme-switcher__button" type="button" data-theme-option="system" aria-pressed="true">Auto</button>
+                <button class="theme-switcher__button" type="button" data-theme-option="light" aria-pressed="false">Light</button>
+                <button class="theme-switcher__button" type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+            </div>
             <a href="https://apps.apple.com/ma/app/gymmetric-gym-workout-tracker/id6747186413" target="_blank" rel="noopener" class="btn btn--sm btn--primary nav__cta">Download</a>
             <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -39,17 +59,26 @@
             <li><a href="#features">Features</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="privacy.html">Privacy</a></li>
+            <li><a href="henaifuos.com">About me</a></li>
+            <li class="mobile-menu__theme">
+                <div class="theme-switcher theme-switcher--mobile" role="group" aria-label="Color theme">
+                    <button class="theme-switcher__button" type="button" data-theme-option="system" aria-pressed="true">Auto</button>
+                    <button class="theme-switcher__button" type="button" data-theme-option="light" aria-pressed="false">Light</button>
+                    <button class="theme-switcher__button" type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+                </div>
+            </li>
             <li><a href="https://apps.apple.com/ma/app/gymmetric-gym-workout-tracker/id6747186413" target="_blank" rel="noopener" class="btn btn--primary btn--block">Download</a></li>
         </ul>
     </div>
 
+    <main id="main-content">
     <!-- ======================== HERO ======================== -->
     <section class="hero" id="hero">
         <div class="hero__bg-glow"></div>
         <div class="hero__bg-grid"></div>
         <div class="container hero__inner">
             <div class="hero__content reveal">
-                <span class="badge">Now available on iOS 26</span>
+                <span class="badge">Native iOS Workout Tracker</span>
                 <h1 class="hero__title">
                     Your Gym.<br>
                     <span class="gradient-text">Your Metrics.</span>
@@ -62,11 +91,12 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                         Download on App Store
                     </a>
-                    <a href="#features" class="btn btn--ghost btn--lg">Explore Features</a>
+                    <a href="henaifuos.com" class="btn btn--ghost btn--lg">About me</a>
                 </div>
+                <p class="hero__portfolio-note">Built by Soufiane H. as part of a broader iOS product portfolio.</p>
                 <div class="hero__stats">
                     <div class="hero__stat">
-                        <span class="hero__stat-value counter" data-target="500">0</span>+
+                        <span class="hero__stat-value counter" data-target="1500">0</span>+
                         <span class="hero__stat-label">Exercises</span>
                     </div>
                     <div class="hero__stat-divider"></div>
@@ -82,13 +112,8 @@
                 </div>
             </div>
             <div class="hero__visual reveal reveal--delay-1">
-                <div class="phone-mockup">
-                    <div class="phone-mockup__frame">
-                        <div class="phone-mockup__notch"></div>
-                        <div class="phone-mockup__screen">
-                            <img src="assets/images/demoapp.png" alt="Gymmetric app screenshot showing routine overview with stats and charts" class="phone-mockup__screenshot">
-                        </div>
-                    </div>
+                <div class="phone-mockup phone-mockup--asset">
+                    <img src="assets/images/mockup.png" alt="Workout tracker app mockup showing routines, workout stats, and progress charts" class="phone-mockup__asset">
                 </div>
             </div>
         </div>
@@ -106,7 +131,7 @@
             <div class="section-header reveal">
                 <span class="badge">Powerful Features</span>
                 <h2 class="section-title">Everything you need to<br><span class="gradient-text">crush your goals</span></h2>
-                <p class="section-subtitle">From building your first routine to analyzing long-term trends, Gymmetric has every tool in one beautifully crafted app.</p>
+                <p class="section-subtitle">From building your first routine to analyzing long-term trends, Gymmetric keeps every workout tool in one polished, focused app.</p>
             </div>
 
             <div class="features__grid">
@@ -224,7 +249,7 @@
             <div class="section-header reveal">
                 <span class="badge">Designed for lifters</span>
                 <h2 class="section-title">A beautiful app for<br><span class="gradient-text">serious training</span></h2>
-                <p class="section-subtitle">Gymmetric is crafted with Apple's latest design patterns — smooth animations, haptic feedback, accessibility, and Dark Mode support out of the box.</p>
+                <p class="section-subtitle">Gymmetric is crafted with thoughtful iOS design patterns, smooth motion, haptic feedback, accessibility support, and a clean product feel end to end.</p>
             </div>
             <div class="showcase__cards">
                 <div class="showcase-card reveal">
@@ -261,6 +286,20 @@
         </div>
     </section>
 
+    <!-- ======================== CREATOR BRIDGE ======================== -->
+    <section class="creator-bridge" id="creator-bridge">
+        <div class="container">
+            <div class="creator-bridge__card reveal">
+                <span class="badge">Built by Soufiane H.</span>
+                <h2 class="section-title">Gymmetric connects directly into the portfolio experience behind it.</h2>
+                <p class="section-subtitle">Explore the portfolio to see the broader iOS engineering background, app work, and the product-focused approach that shaped this website and the app itself.</p>
+                <div class="creator-bridge__actions">
+                    <a href="henaifuos.com" class="btn btn--primary btn--lg">About me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- ======================== PRIVACY ======================== -->
     <section class="privacy" id="privacy">
@@ -270,7 +309,7 @@
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6BD18A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
                 </div>
                 <h2 class="section-title">Privacy Policy</h2>
-                <p class="privacy__intro">Your privacy matters to us. Gymmetric is designed with a privacy-first approach — your workout data belongs to you.</p>
+                <p class="privacy__intro">Your privacy matters to us. Gymmetric is designed with a privacy-first approach and keeps your workout data centered on your device.</p>
 
                 <div class="privacy__grid">
                     <div class="privacy__card">
@@ -310,7 +349,7 @@
         <div class="container">
             <div class="cta__inner reveal">
                 <h2 class="section-title">Ready to take control of your<br><span class="gradient-text">fitness journey?</span></h2>
-                <p class="section-subtitle">Download Gymmetric today and start building the body you want — one tracked session at a time.</p>
+                <p class="section-subtitle">Download Gymmetric today and start building the body you want, one tracked session at a time.</p>
                 <a href="https://apps.apple.com/ma/app/gymmetric-gym-workout-tracker/id6747186413" target="_blank" rel="noopener" class="btn btn--primary btn--lg btn--app-store">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                     Download on the App Store
@@ -318,6 +357,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- ======================== FOOTER ======================== -->
     <footer class="footer">
@@ -331,8 +371,9 @@
                     <a href="#features">Features</a>
                     <a href="#how-it-works">How It Works</a>
                     <a href="privacy.html">Privacy</a>
+                    <a href="henaifuos.com">About me</a>
                 </div>
-                <p class="footer__copy">&copy; 2026 Gymmetric. All rights reserved.</p>
+                <p class="footer__copy">&copy; 2026 Gymmetric. Built by Soufiane H.</p>
             </div>
         </div>
     </footer>
